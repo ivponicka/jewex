@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
-  signInAuthUserWithEmailAndPassword
+  signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
 import "./sign-in.styles.scss";
@@ -17,35 +17,36 @@ const SignIn = () => {
   const [formFields, setFormFileds] = useState(defaultFormFileds);
   const { email, password } = formFields;
 
+
   const resetFormFileds = () => {
     setFormFileds(defaultFormFileds);
   };
 
   const signInwithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
+      const { user } = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
+
       resetFormFileds();
     } catch (error) {
-        switch(error.code) {
-            case 'auth/wrong-password':
-                alert('incorrect password');
-                break;
-            case 'auth/user-not-found':
-                alert('no user dound');
-                break;
-            default:
-                console.log(error)
-        }
+      switch (error.code) {
+        case "auth/wrong-password":
+          alert("incorrect password");
+          break;
+        case "auth/user-not-found":
+          alert("no user dound");
+          break;
+        default:
+          console.log(error);
+      }
     }
   };
 

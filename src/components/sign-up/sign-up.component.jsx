@@ -14,9 +14,10 @@ const defaultFormFileds = {
   confirmPassword: "",
 };
 
-const Authentication = () => {
+const SignUp = () => {
   const [formFields, setFormFileds] = useState(defaultFormFileds);
   const { displayName, email, password, confirmPassword } = formFields;
+
 
   const resetFormFileds = () => {
     setFormFileds(defaultFormFileds);
@@ -35,7 +36,7 @@ const Authentication = () => {
         email,
         password
       );
-
+     
       await createUserDocumentFromAuth(user, { displayName });
       resetFormFileds();
     } catch (error) {
@@ -95,6 +96,6 @@ const Authentication = () => {
   );
 };
 
-export default Authentication;
+export default SignUp;
 
 
